@@ -4,8 +4,17 @@ server:
 spring:
   application:
     name: msvc-user
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/users_db
+    username: postgres
+    password: 1404
 
-
+  jpa:
+    hibernate:
+      ddl-auto: create
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
   config:
     import: optional:configserver:http://localhost:8761
 
