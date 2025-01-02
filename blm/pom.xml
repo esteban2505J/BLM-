@@ -20,6 +20,10 @@
     <module>msvc-gateway</module>
     <module>msvc-eureka</module>
     <module>msvc-config</module>
+    <module>msvc-user</module>
+    <module>msvc-inventory</module>
+    <module>msvc-order</module>
+    <module>msvc-billing</module>
   </modules>
 
   <properties>

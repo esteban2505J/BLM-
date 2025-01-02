@@ -7,16 +7,24 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="msvc-gateway" />
-        <module name="msvc-config" />
+        <module name="msvc-inventory" />
         <module name="msvc-eureka" />
+        <module name="msvc-order" />
+        <module name="msvc-billing" />
+        <module name="msvc-config" />
+        <module name="msvc-user" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="msvc-billing" options="-parameters" />
       <module name="msvc-config" options="-parameters" />
       <module name="msvc-eureka" options="-parameters" />
       <module name="msvc-gateway" options="-parameters" />
+      <module name="msvc-inventory" options="-parameters" />
+      <module name="msvc-order" options="-parameters" />
+      <module name="msvc-user" options="-parameters" />
     </option>
   </component>
 </project>
