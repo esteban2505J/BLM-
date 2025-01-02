@@ -1,15 +1,13 @@
 server:
-  port: 8080
+  port: 9090
 
 spring:
   application:
-    name: msvc-gateway
-  cloud:
-    gateway:
-      discovery:
-        locator:
-          enabled: true
+    name: msvc-user
 
+
+  config:
+    import: optional:configserver:http://localhost:8761
 
 eureka:
   instance:
