@@ -13,6 +13,7 @@
         <module name="msvc-order" />
         <module name="msvc-billing" />
         <module name="msvc-config" />
+        <module name="msvc-branch" />
         <module name="msvc-user" />
       </profile>
     </annotationProcessing>
@@ -20,6 +21,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="msvc-billing" options="-parameters" />
+      <module name="msvc-branch" options="-parameters" />
       <module name="msvc-config" options="-parameters" />
       <module name="msvc-eureka" options="-parameters" />
       <module name="msvc-gateway" options="-parameters" />

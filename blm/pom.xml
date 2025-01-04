@@ -24,6 +24,7 @@
     <module>msvc-inventory</module>
     <module>msvc-order</module>
     <module>msvc-billing</module>
+    <module>msvc-branch</module>
   </modules>
 
   <properties>
