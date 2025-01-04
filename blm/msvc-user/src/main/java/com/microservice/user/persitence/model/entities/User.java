@@ -29,6 +29,9 @@ public class User {
     @Column(nullable = false, unique = false, length = 50)
     private String firstName;
 
+    @Column(nullable = false, unique = true, length = 50)
+    private String userId;
+
     @Column(nullable = false, unique = false, length = 50)
     private String lastName;
 
@@ -47,6 +50,11 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<RoleEntity> roles = new HashSet<>();
+
+    @ElementCollection
+    @CollectionTable(name = "user_branches", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "branch_id")
+    private Set<String> branchIds = new HashSet<>();
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
