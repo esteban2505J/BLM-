@@ -1,6 +1,6 @@
 package com.microservice.user.persitence.model.entities;
 
-import com.microservice.user.persitence.model.enums.Role;
+
 import com.microservice.user.persitence.model.enums.Status;
 
 import jakarta.persistence.*;
@@ -55,6 +55,18 @@ public class User {
     @CollectionTable(name = "user_branches", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "branch_id")
     private Set<String> branchIds = new HashSet<>();
+
+    @Column(name = "account_non_expired")
+    private boolean accountNonExpired = true;
+
+    @Column(name = "account_non_locked")
+    private boolean accountNonLocked = true;
+
+    @Column(name = "credentials_non_expired")
+    private boolean credentialsNonExpired = true;
+
+    @Column(name = "is_enabled")
+    private boolean isEnabled = true;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
