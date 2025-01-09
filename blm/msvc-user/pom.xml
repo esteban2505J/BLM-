@@ -7,11 +7,11 @@
 		<artifactId>blm</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
-	<groupId>com.microservice.user</groupId>
-	<artifactId>msvc-user</artifactId>
+	<groupId>com.microservice.userEntity</groupId>
+	<artifactId>msvc-userEntity</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>msvc-user</name>
-	<description>spring boot mircro service user </description>
+	<name>msvc-userEntity</name>
+	<description>spring boot mircro service userEntity </description>
 	<url/>
 	<licenses>
 		<license/>

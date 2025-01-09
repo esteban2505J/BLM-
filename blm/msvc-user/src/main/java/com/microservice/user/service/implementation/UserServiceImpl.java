@@ -1,7 +1,6 @@
 package com.microservice.user.service.implementation;
 
-import com.microservice.user.persitence.model.entities.User;
-import com.microservice.user.persitence.model.enums.Role;
+import com.microservice.user.persitence.model.entities.UserEntity;
 import com.microservice.user.presentation.dtos.LoginDTO;
 import com.microservice.user.presentation.dtos.ResponseDTO;
 import com.microservice.user.presentation.dtos.TokenDTO;
@@ -26,11 +25,11 @@ public class UserServiceImpl implements UserService {
         if (userDTO == null) new IllegalArgumentException("userDTO is null");
 
 
-        User newUser = new User();
-        newUser.setFirstName(userDTO.firstName());
-        newUser.setLastName(userDTO.lastName());
-        newUser.setEmail(userDTO.email());
-        newUser.setPassword(passwordEncoder.encode(userDTO.password()));
+        UserEntity newUserEntity = new UserEntity();
+        newUserEntity.setFirstName(userDTO.firstName());
+        newUserEntity.setLastName(userDTO.lastName());
+        newUserEntity.setEmail(userDTO.email());
+        newUserEntity.setPassword(passwordEncoder.encode(userDTO.password()));
 
         return null;
     }

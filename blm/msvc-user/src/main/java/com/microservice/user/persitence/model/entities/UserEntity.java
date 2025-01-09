@@ -20,7 +20,7 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
-public class User {
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,10 +60,10 @@ public class User {
     private Set<String> branchIds = new HashSet<>();
 
     @Column(name = "account_non_expired")
-    private boolean accountNonExpired = true;
+    private boolean isAccountNonExpired = true;
 
     @Column(name = "account_non_locked")
-    private boolean accountNonLocked = true;
+    private boolean isAccountNonLocked = true;
 
     @Column(name = "credentials_non_expired")
     private boolean credentialsNonExpired = true;
