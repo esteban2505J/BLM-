@@ -38,4 +38,14 @@ public class UserServiceImpl implements UserService {
     public ResponseEntity<ResponseDTO> loginUser(LoginDTO loginDTO) {
         return null;
     }
+
+    @Override
+    public ResponseEntity<ResponseDTO> logoutUser(TokenDTO tokenDTO) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<ResponseDTO> updateUser(UserDTO userDTO) {
+        return null;
+    }
 }
