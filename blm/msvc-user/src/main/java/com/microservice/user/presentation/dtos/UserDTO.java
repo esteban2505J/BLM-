@@ -16,6 +16,7 @@ public record UserDTO(
         @NotBlank(message = "password is required")
         String password
 
+
 ) {
 
 }
