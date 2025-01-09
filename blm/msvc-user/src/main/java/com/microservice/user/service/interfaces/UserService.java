@@ -9,7 +9,5 @@ import org.springframework.http.ResponseEntity;
 public interface UserService {
 
     public ResponseEntity<TokenDTO> createUser(UserDTO userDTO);
-    public ResponseEntity<ResponseDTO> loginUser(LoginDTO loginDTO);
-    public ResponseEntity<ResponseDTO> logoutUser(TokenDTO tokenDTO);
     public ResponseEntity<ResponseDTO> updateUser(UserDTO userDTO);
 }
