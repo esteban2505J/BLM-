@@ -17,12 +17,14 @@ public class AuthServiceImpl implements AuthService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+    private final JwtService jwtService;
 
 
 
 
     @Override
     public ResponseEntity<TokenDTO> register(UserDTO user) {
+
 
         return null;
     }
