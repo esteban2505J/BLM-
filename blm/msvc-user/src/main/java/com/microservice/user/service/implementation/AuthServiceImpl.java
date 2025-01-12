@@ -27,9 +27,16 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public ResponseEntity<TokenDTO> register(UserDTO user) {
-        if (user == null) throw new IllegalArgumentException("User cannot be null");
+
+        //verify if the DTO is null
+        if (user == null) return ResponseEntity.badRequest().body(new TokenDTO("User cannot be null"));
+
         try {
-            if(appUtil.checkEmail(user.email())) throw new IllegalArgumentException("Email is already in use");
+
+            //verify if the user already exist int the database
+            if(appUtil.checkEmail(user.email()))  return ResponseEntity.badRequest().body(new TokenDTO("Email is already in use"));
+
+            //create a new user
            UserEntity newUser =  UserEntity.builder()
                     .email(user.email())
                     .password(passwordEncoder.encode(user.password()))
@@ -39,11 +46,15 @@ public class AuthServiceImpl implements AuthService {
                     .lastName(user.lastName())
                     .phoneNumber(user.phoneNumber()).build();
 
+           //save a new user
+           userRepository.save(newUser);
+            //generate and return user token
+
             return ResponseEntity.ok(new TokenDTO(jwtService.generateToken(newUser)));
 
 
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(new TokenDTO(e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(new TokenDTO("An unexpected error occurred"));
         }
 
     }

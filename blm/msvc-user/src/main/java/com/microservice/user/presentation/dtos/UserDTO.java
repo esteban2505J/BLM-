@@ -17,7 +17,9 @@ public record UserDTO(
         @NotBlank(message = "password is required")
         String password,
         @NotBlank(message = "phoneNumber is required")
-        String phoneNumber
+        String phoneNumber,
+
+        String branchId
 
 
 ) {
