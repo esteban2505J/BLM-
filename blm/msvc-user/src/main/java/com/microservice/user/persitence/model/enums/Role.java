@@ -1,5 +1,5 @@
 package com.microservice.user.persitence.model.enums;
 
 public enum Role {
-    ADMIN, AUX, CLIENT
+    ADMIN, AUX, CLIENT, CASHIER
 }

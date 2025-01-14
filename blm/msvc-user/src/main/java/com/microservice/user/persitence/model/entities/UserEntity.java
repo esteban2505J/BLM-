@@ -68,6 +68,9 @@ public class UserEntity {
     @Column(name = "credentials_non_expired")
     private boolean credentialsNonExpired = true;
 
+    @Column(nullable = true, unique = true, length = 50)
+    private String employeeCode;
+
     @Column(name = "is_enabled")
     private boolean isEnabled = true;
 

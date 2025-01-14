@@ -15,10 +15,10 @@ public class AppUtil {
    final UserRepository userRepository;
 
     /**
-     * Verifica si un correo no está en uso.
+     * check if an email doesn't it in use.
      *
-     * @param email El correo a verificar.
-     * @return true si el correo no existe, false si ya está en uso.
+     * @param email  the email to check.
+     * @return true if the email not exist, false if the email already exist .
      */
     public boolean checkEmail(String email) {
         if (email == null || email.isBlank()) {
