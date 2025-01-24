@@ -3,11 +3,14 @@ package com.microservice.user.persitence.model.entities;
 
 import com.microservice.user.persitence.model.enums.Status;
 
+import com.microservice.user.persitence.model.vo.TokenEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -70,6 +73,9 @@ public class UserEntity {
 
     @Column(nullable = true, unique = true, length = 50)
     private String employeeCode;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<TokenEntity> tokens = new ArrayList<>();
 
     @Column(name = "is_enabled")
     private boolean isEnabled = true;

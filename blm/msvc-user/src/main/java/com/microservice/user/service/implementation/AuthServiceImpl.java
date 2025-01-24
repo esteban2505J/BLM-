@@ -24,7 +24,6 @@ public class AuthServiceImpl implements AuthService {
 
 
 
-
     @Override
     public ResponseEntity<TokenDTO> register(UserDTO user) {
 
@@ -33,7 +32,7 @@ public class AuthServiceImpl implements AuthService {
 
         try {
 
-            //verify if the user already exist int the database
+            //verify if the user already exist in the database
             if(appUtil.checkEmail(user.email()))  return ResponseEntity.badRequest().body(new TokenDTO("Email is already in use"));
 
             //create a new user

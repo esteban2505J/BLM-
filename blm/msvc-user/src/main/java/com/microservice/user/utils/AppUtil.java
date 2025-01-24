@@ -2,7 +2,6 @@ package com.microservice.user.utils;
 
 import com.microservice.user.persitence.model.entities.UserEntity;
 import com.microservice.user.persitence.repository.UserRepository;
-import com.microservice.user.presentation.dtos.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
