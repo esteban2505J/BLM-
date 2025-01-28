@@ -1,6 +1,8 @@
 package com.microservice.user.service.implementation;
 
+import com.microservice.user.persitence.model.entities.RoleEntity;
 import com.microservice.user.persitence.model.entities.UserEntity;
+import com.microservice.user.persitence.model.enums.Role;
 import com.microservice.user.persitence.repository.UserRepository;
 import com.microservice.user.presentation.dtos.LoginDTO;
 import com.microservice.user.presentation.dtos.TokenDTO;
@@ -21,6 +23,7 @@ public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
     private final JwtService jwtService;
     private final AppUtil appUtil;
+    private final RolesService rolesService;
 
 
 
@@ -35,6 +38,9 @@ public class AuthServiceImpl implements AuthService {
             //verify if the user already exist in the database
             if(appUtil.checkEmail(user.email()))  return ResponseEntity.badRequest().body(new TokenDTO("Email is already in use"));
 
+
+            RoleEntity newRole = rolesService.createRoleDefaultPermission(user.role());
+
             //create a new user
            UserEntity newUser =  UserEntity.builder()
                     .email(user.email())
@@ -44,6 +50,8 @@ public class AuthServiceImpl implements AuthService {
                     .firstName(user.firstName())
                     .lastName(user.lastName())
                     .phoneNumber(user.phoneNumber()).build();
+
+           newUser.getRoles().add(newRole);
 
            //save a new user
            userRepository.save(newUser);
