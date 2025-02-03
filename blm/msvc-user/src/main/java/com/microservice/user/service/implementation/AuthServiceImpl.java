@@ -40,7 +40,9 @@ public class AuthServiceImpl implements AuthService {
             //verify if the user already exist in the database
             if(appUtil.checkEmail(user.email()))  return ResponseEntity.badRequest().body(new TokenDTO("Email is already in use"));
 
-            if(!springSecurityUtils.canYouCreteRole(user.role())) ;
+//            check if the user you are trying to create another user has the required authorization
+            if(!springSecurityUtils.canYouCreteRole(user.role())) return ResponseEntity.badRequest().body(new TokenDTO("Unauthorized"));
+
             //create a new role for the user
             RoleEntity newRole = rolesService.createRoleDefaultPermission(user.role());
 

@@ -1,6 +1,4 @@
 package com.microservice.user.utils;
-
-
 import com.microservice.user.persitence.model.enums.Role;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
