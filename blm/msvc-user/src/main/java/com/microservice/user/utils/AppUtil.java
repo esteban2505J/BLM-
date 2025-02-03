@@ -12,6 +12,7 @@ import java.util.Optional;
 public class AppUtil {
 
    final UserRepository userRepository;
+   final SpringSecurityUtils springSecurityUtils;
 
     /**
      * check if an email doesn't it in use.
@@ -32,6 +33,7 @@ public class AppUtil {
             throw new RuntimeException("Error al verificar el correo en la base de datos", e);
         }
     }
+
 
 
 

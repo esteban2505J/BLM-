@@ -7,9 +7,8 @@ import com.microservice.user.persitence.repository.PermissionRepository;
 import com.microservice.user.persitence.repository.RoleRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+
 
 @Service
 public class RolesService {
@@ -54,7 +53,18 @@ public class RolesService {
         return defaultPermissions;
     }
 
-
+    public Set<Role> getCreatableRoles(Role role) {
+        switch (role) {
+            case ADMIN:
+                return EnumSet.of(Role.CLIENT, Role.AUX, Role.CASHIER);
+            case AUX:
+                return EnumSet.of(Role.CLIENT);
+            case CLIENT:
+                return EnumSet.of(Role.CLIENT); // Si CLIENT solo puede crear CLIENT
+            default:
+                return Collections.emptySet(); // Retorna un conjunto vacío en caso de un rol no esperado
+        }
+    }
 
 
 }

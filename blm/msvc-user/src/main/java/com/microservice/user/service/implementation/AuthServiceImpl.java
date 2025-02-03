@@ -2,13 +2,14 @@ package com.microservice.user.service.implementation;
 
 import com.microservice.user.persitence.model.entities.RoleEntity;
 import com.microservice.user.persitence.model.entities.UserEntity;
-import com.microservice.user.persitence.model.enums.Role;
+
 import com.microservice.user.persitence.repository.UserRepository;
 import com.microservice.user.presentation.dtos.LoginDTO;
 import com.microservice.user.presentation.dtos.TokenDTO;
 import com.microservice.user.presentation.dtos.UserDTO;
 import com.microservice.user.service.interfaces.AuthService;
 import com.microservice.user.utils.AppUtil;
+import com.microservice.user.utils.SpringSecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 
@@ -24,6 +25,7 @@ public class AuthServiceImpl implements AuthService {
     private final JwtService jwtService;
     private final AppUtil appUtil;
     private final RolesService rolesService;
+    private final SpringSecurityUtils springSecurityUtils;
 
 
 
@@ -37,6 +39,7 @@ public class AuthServiceImpl implements AuthService {
 
             //verify if the user already exist in the database
             if(appUtil.checkEmail(user.email()))  return ResponseEntity.badRequest().body(new TokenDTO("Email is already in use"));
+
 
 
             RoleEntity newRole = rolesService.createRoleDefaultPermission(user.role());
