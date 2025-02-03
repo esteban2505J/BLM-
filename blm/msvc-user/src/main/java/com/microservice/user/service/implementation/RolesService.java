@@ -54,15 +54,19 @@ public class RolesService {
     }
 
     public Set<Role> getCreatableRoles(Role role) {
+        if (role == null) {
+            return Collections.emptySet(); // Evita NullPointerException
+        }
+
         switch (role) {
             case ADMIN:
                 return EnumSet.of(Role.CLIENT, Role.AUX, Role.CASHIER);
             case AUX:
                 return EnumSet.of(Role.CLIENT);
             case CLIENT:
-                return EnumSet.of(Role.CLIENT); // Si CLIENT solo puede crear CLIENT
+                return EnumSet.of(Role.CLIENT);
             default:
-                return Collections.emptySet(); // Retorna un conjunto vacío en caso de un rol no esperado
+                return Collections.emptySet();
         }
     }
 
