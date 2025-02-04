@@ -73,7 +73,14 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public ResponseEntity<TokenDTO> login(LoginDTO loginDTO) {
-        return null;
+
+        if(loginDTO == null) return ResponseEntity.badRequest().body(new TokenDTO("User cannot be null"));
+        UserEntity userFound = userRepository.findByEmail(loginDTO.email()).orElseThrow();
+        if(!passwordEncoder.matches(loginDTO.password(), userFound.getPassword())) {
+            return ResponseEntity.badRequest().body(new TokenDTO("Wrong password"));
+        }
+
+        return ResponseEntity.ok(new TokenDTO(jwtService.generateToken(userFound)));
     }
 
     @Override
