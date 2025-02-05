@@ -75,9 +75,12 @@ public class AuthServiceImpl implements AuthService {
     public ResponseEntity<TokenDTO> login(LoginDTO loginDTO) {
 
         if(loginDTO == null) return ResponseEntity.badRequest().body(new TokenDTO("User cannot be null"));
-        UserEntity userFound = userRepository.findByEmail(loginDTO.email()).orElseThrow();
+        if (loginDTO.email().isBlank() || loginDTO.password().isBlank()) return ResponseEntity.badRequest().body(new TokenDTO("Invalid username or password"));
+
+        UserEntity userFound = userRepository.findByEmail(loginDTO.email()).orElseThrow(()-> new IllegalArgumentException("User not found"));
+
         if(!passwordEncoder.matches(loginDTO.password(), userFound.getPassword())) {
-            return ResponseEntity.badRequest().body(new TokenDTO("Wrong password"));
+            return ResponseEntity.status(401).body(new TokenDTO("Wrong password"));
         }
 
         return ResponseEntity.ok(new TokenDTO(jwtService.generateToken(userFound)));
