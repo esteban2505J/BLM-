@@ -1,5 +1,6 @@
 package com.microservice.user.presentation.controller;
 
+import com.microservice.user.persitence.model.enums.StateRequest;
 import com.microservice.user.presentation.dtos.LoginDTO;
 import com.microservice.user.presentation.dtos.ResponseDTO;
 import com.microservice.user.presentation.dtos.TokenDTO;
@@ -25,19 +26,22 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<ResponseDTO> createUser(@Valid  @RequestBody UserDTO user) {
+        try {
+            TokenDTO token = authService.register(user);
+            if (token == null) {
+                return ResponseEntity.badRequest().body(new ResponseDTO(StateRequest.ERROR, "something went wrong"));
 
-            ResponseEntity<TokenDTO> token = authService.register(user);
-          return null;
-
-
-
-        return ResponseEntity.ok().body(new ResponseDTO());
+            }
+                return ResponseEntity.ok().body(new ResponseDTO(StateRequest.SUCCESS, token));
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().body(new ResponseDTO(StateRequest.ERROR, e.getMessage()));
+        }
 
     }
+
     @PostMapping("/login")
     public  ResponseEntity<ResponseDTO> login(@Valid @RequestBody LoginDTO loginDTO) {
-        return ResponseEntity.ok().body(new ResponseDTO());
-
+        return null;
     }
 
 
