@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 @Service
 public interface AuthService {
 
-    public ResponseEntity<TokenDTO>register(@RequestBody UserDTO user);
+    public TokenDTO register(@RequestBody UserDTO user);
 
-    public ResponseEntity<TokenDTO> login(@RequestBody LoginDTO loginDTO);
+    public TokenDTO login(@RequestBody LoginDTO loginDTO);
     public TokenDTO refreshToken(@RequestHeader(HttpHeaders.AUTHORIZATION) String token);
 }
