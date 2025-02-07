@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 public class AuthController {
 
-    private AuthServiceImpl authServiceImpl;
+    private final AuthServiceImpl authServiceImpl;
     public AuthController(AuthServiceImpl authServiceImpl) {
         this.authServiceImpl = authServiceImpl;
     }
@@ -33,7 +33,7 @@ public class AuthController {
                 return ResponseEntity.badRequest().body(new ResponseDTO(StateRequest.ERROR, "something went wrong"));
 
             }
-                return ResponseEntity.ok().body(new ResponseDTO(StateRequest.SUCCESS, token));
+                return ResponseEntity.ok().body(new ResponseDTO<TokenDTO>(StateRequest.SUCCESS, token));
         }catch (Exception e) {
             return ResponseEntity.badRequest().body(new ResponseDTO(StateRequest.ERROR, e.getMessage()));
         }
@@ -42,7 +42,11 @@ public class AuthController {
 
     @PostMapping("/login")
     public  ResponseEntity<ResponseDTO<TokenDTO>> login(@Valid @RequestBody LoginDTO loginDTO) {
-        return null;
+        TokenDTO tokenLogin = authServiceImpl.login(loginDTO);
+        if (tokenLogin == null) {
+            return ResponseEntity.badRequest().body(new ResponseDTO(StateRequest.ERROR, "something went wrong"));
+        }
+        return ResponseEntity.ok().body(new ResponseDTO<TokenDTO>(StateRequest.SUCCESS, tokenLogin));
     }
 
 

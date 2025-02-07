@@ -63,8 +63,8 @@ public class AuthServiceImpl implements AuthService {
 
            //save a new user
            userRepository.save(newUser);
-            //generate and return user token
 
+            //generate and return user token
             return new TokenDTO(jwtService.generateToken(newUser));
 
 
