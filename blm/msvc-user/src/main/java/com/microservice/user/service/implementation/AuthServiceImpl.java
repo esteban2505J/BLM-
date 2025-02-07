@@ -10,15 +10,17 @@ import com.microservice.user.presentation.dtos.UserDTO;
 import com.microservice.user.service.interfaces.AuthService;
 import com.microservice.user.utils.AppUtil;
 import com.microservice.user.utils.SpringSecurityUtils;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import lombok.AllArgsConstructor;
 
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor(onConstructor = @__(@Autowired))
+
 public class AuthServiceImpl implements AuthService {
 
     private final PasswordEncoder passwordEncoder;
@@ -87,8 +89,5 @@ public class AuthServiceImpl implements AuthService {
         return new TokenDTO(jwtService.generateToken(userFound));
     }
 
-    @Override
-    public TokenDTO refreshToken(String token) {
-        return null;
-    }
+
 }

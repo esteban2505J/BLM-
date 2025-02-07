@@ -1,7 +1,7 @@
 package com.microservice.user.persitence.model.vo;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import com.microservice.user.persitence.model.entities.UserEntity;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity(name = "tokens")
@@ -14,6 +14,10 @@ import lombok.*;
 public class TokenEntity {
     @Id
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 
 
 

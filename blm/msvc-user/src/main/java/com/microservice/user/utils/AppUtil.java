@@ -2,17 +2,18 @@ package com.microservice.user.utils;
 
 import com.microservice.user.persitence.model.entities.UserEntity;
 import com.microservice.user.persitence.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@RequiredArgsConstructor
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 @Service
 public class AppUtil {
 
    final UserRepository userRepository;
-   final SpringSecurityUtils springSecurityUtils;
+
 
     /**
      * check if an email doesn't it in use.
