@@ -2,6 +2,9 @@ package com.microservice.user.service.implementation;
 
 import com.microservice.user.persitence.model.entities.UserEntity;
 import com.microservice.user.persitence.model.vo.TokenEntity;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -47,6 +50,28 @@ public class JwtService {
                 .compact();
 
 
+    }
+
+    public boolean validateToken(String token) {
+        try {
+            // Parseamos el token y extraemos sus claims
+            Jws<Claims> claims = Jwts.parser()
+                    .setSigningKey(getSecretKey())  // Clave secreta que usamos para firmar el token
+                    .build()
+                    .parseClaimsJws(token);  // Esto validará la firma y la estructura del token
+
+            // Comprobamos si el token ha expirado
+            Date expirationDate = claims.getBody().getExpiration();
+            if (expirationDate.before(new Date())) {
+                // Si la fecha de expiración ya pasó
+                return false;
+            }
+
+            // Si la fecha de expiración es válida, el token es válido
+            return true;
+        }catch (JwtException e) {
+                return false;
+        }
     }
 
     private SecretKey getSecretKey() {

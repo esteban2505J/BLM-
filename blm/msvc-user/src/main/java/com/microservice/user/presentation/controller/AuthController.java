@@ -6,6 +6,7 @@ import com.microservice.user.presentation.dtos.ResponseDTO;
 import com.microservice.user.presentation.dtos.TokenDTO;
 import com.microservice.user.presentation.dtos.UserDTO;
 import com.microservice.user.service.implementation.AuthServiceImpl;
+import com.microservice.user.service.implementation.UserServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,8 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final AuthServiceImpl authServiceImpl;
-    public AuthController(AuthServiceImpl authServiceImpl) {
+    private final UserServiceImpl userServiceImpl;
+
+    public AuthController(AuthServiceImpl authServiceImpl, UserServiceImpl userServiceImpl) {
         this.authServiceImpl = authServiceImpl;
+        this.userServiceImpl = userServiceImpl;
     }
 
 
@@ -47,6 +51,20 @@ public class AuthController {
             return ResponseEntity.badRequest().body(new ResponseDTO(StateRequest.ERROR, "something went wrong"));
         }
         return ResponseEntity.ok().body(new ResponseDTO<TokenDTO>(StateRequest.SUCCESS, tokenLogin));
+    }
+
+    @PostMapping("/verifyToken")
+    public ResponseEntity<ResponseDTO<Boolean>> verifyToken(@Valid @RequestBody TokenDTO tokenDTO) {
+        if(tokenDTO == null || tokenDTO.token().isBlank()) {
+            return ResponseEntity.badRequest().body(new ResponseDTO(StateRequest.ERROR, "token is empty"));
+        }
+        boolean isValid = authServiceImpl.checkToken(tokenDTO);
+        if(!isValid) {
+            return ResponseEntity.badRequest().body(new ResponseDTO<>(StateRequest.ERROR, false));
+        }
+        return ResponseEntity.ok().body(new ResponseDTO<>(StateRequest.SUCCESS, true));
+
+
     }
 
 

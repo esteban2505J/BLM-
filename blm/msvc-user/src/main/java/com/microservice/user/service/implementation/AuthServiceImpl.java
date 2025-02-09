@@ -11,6 +11,7 @@ import com.microservice.user.presentation.dtos.UserDTO;
 import com.microservice.user.service.interfaces.AuthService;
 import com.microservice.user.utils.AppUtil;
 import com.microservice.user.utils.SpringSecurityUtils;
+import io.jsonwebtoken.JwtException;
 import lombok.AllArgsConstructor;
 
 
@@ -111,6 +112,16 @@ public class AuthServiceImpl implements AuthService {
         userRepository.updateTokens(userFound.getId(),List.of(accessToken,refreshToken));
 
         return new TokenDTO(accessToken.getToken());
+    }
+
+    @Override
+    public boolean checkToken(TokenDTO token) {
+        if(token == null || token.token().isBlank())throw new InsufficientAuthenticationException("Token cannot be empty");
+        try {
+            return jwtService.validateToken(token.token());
+        }catch (JwtException e) {
+            return false;
+        }
     }
 
 
