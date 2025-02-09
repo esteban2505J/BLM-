@@ -1,6 +1,7 @@
 package com.microservice.user.service.implementation;
 
 import com.microservice.user.persitence.model.entities.UserEntity;
+import com.microservice.user.persitence.model.vo.TokenEntity;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -23,14 +24,13 @@ public class JwtService {
     @Value("${REFRESH_EXPIRATION}")
     private long refreshExpirationTime;
 
-    public String generateToken(UserEntity user) {
-        return buildToken(user, jwtExpirationTime);
+    public TokenEntity generateToken(UserEntity user) {
+        return   TokenEntity.builder().user(user).token(buildToken(user,jwtExpirationTime)).build();
     }
 
-    public String generateRefreshToken(UserEntity user) {
-        return buildToken(user, refreshExpirationTime);
+    public TokenEntity generateRefreshToken(UserEntity user) {
+        return TokenEntity.builder().user(user).token(buildToken(user,refreshExpirationTime)).build();
     }
-
 
     private String buildToken(UserEntity user, long expirationTime) {
 

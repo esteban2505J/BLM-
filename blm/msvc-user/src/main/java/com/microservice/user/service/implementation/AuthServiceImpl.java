@@ -60,12 +60,15 @@ public class AuthServiceImpl implements AuthService {
                     .phoneNumber(user.phoneNumber()).build();
 
            newUser.getRoles().add(newRole);
+            String refreshToken =  jwtService.generateRefreshToken(newUser);
+            String token = jwtService.generateToken(newUser);
+           newUser.getTokens().add();
 
            //save a new user
            userRepository.save(newUser);
 
             //generate and return user token
-            return new TokenDTO(jwtService.generateToken(newUser));
+            return new TokenDTO();
 
 
         } catch (Exception e) {

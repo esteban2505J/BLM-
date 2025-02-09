@@ -4,7 +4,8 @@ import com.microservice.user.persitence.model.entities.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Entity(name = "tokens")
+@Entity
+@Table(name = "tokens")
 @Getter
 @Setter
 @Builder
@@ -13,11 +14,15 @@ import lombok.*;
 @AllArgsConstructor
 public class TokenEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
+
+    @Column(name = "token", nullable = false)
+    private String token;
 
 
 
