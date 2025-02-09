@@ -25,10 +25,13 @@ public class JwtService {
     private long refreshExpirationTime;
 
     public TokenEntity generateToken(UserEntity user) {
+
+        if(user == null || user.getId() == null) {throw  new IllegalArgumentException("Invalid user");}
         return   TokenEntity.builder().user(user).token(buildToken(user,jwtExpirationTime)).build();
     }
 
     public TokenEntity generateRefreshToken(UserEntity user) {
+
         return TokenEntity.builder().user(user).token(buildToken(user,refreshExpirationTime)).build();
     }
 

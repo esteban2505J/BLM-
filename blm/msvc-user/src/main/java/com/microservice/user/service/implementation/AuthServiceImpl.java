@@ -3,6 +3,7 @@ package com.microservice.user.service.implementation;
 import com.microservice.user.persitence.model.entities.RoleEntity;
 import com.microservice.user.persitence.model.entities.UserEntity;
 
+import com.microservice.user.persitence.model.vo.TokenEntity;
 import com.microservice.user.persitence.repository.UserRepository;
 import com.microservice.user.presentation.dtos.LoginDTO;
 import com.microservice.user.presentation.dtos.TokenDTO;
@@ -17,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
@@ -59,23 +62,30 @@ public class AuthServiceImpl implements AuthService {
                     .lastName(user.lastName())
                     .phoneNumber(user.phoneNumber()).build();
 
-           newUser.getRoles().add(newRole);
-            String refreshToken =  jwtService.generateRefreshToken(newUser);
-            String token = jwtService.generateToken(newUser);
-           newUser.getTokens().add();
+            // **Generar Tokens**
+            TokenEntity accessToken = jwtService.generateToken(newUser);
+            TokenEntity refreshToken = jwtService.generateRefreshToken(newUser);
+
+            // **Crear entidades de tokens y asociarlas al usuario**
+            List<TokenEntity> tokens = List.of(
+                    accessToken,refreshToken
+            );
+
+            newUser.getTokens().addAll(tokens);
+            newUser.getRoles().add(newRole);
 
            //save a new user
            userRepository.save(newUser);
 
             //generate and return user token
-            return new TokenDTO();
-
+            return new TokenDTO(accessToken.getToken());
 
         } catch (Exception e) {
             return new TokenDTO("An unexpected error occurred");
         }
 
     }
+
 
     @Override
     public TokenDTO login(LoginDTO loginDTO) {
@@ -89,7 +99,18 @@ public class AuthServiceImpl implements AuthService {
             return new TokenDTO("Wrong password");
         }
 
-        return new TokenDTO(jwtService.generateToken(userFound));
+
+        TokenEntity accessToken = jwtService.generateToken(userFound);
+        TokenEntity refreshToken = jwtService.generateRefreshToken(userFound);
+
+        userFound.getTokens().clear();
+
+        userFound.getTokens().add(accessToken);
+        userFound.getTokens().add(refreshToken);
+
+        userRepository.updateTokens(userFound.getId(),List.of(accessToken,refreshToken));
+
+        return new TokenDTO(accessToken.getToken());
     }
 
 
