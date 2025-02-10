@@ -146,4 +146,21 @@ public class AuthServiceImpl implements AuthService {
 
     }
 
+    @Override
+    public StateRequest checkTokenPassword(TokenDTO token , String email) {
+        if (token.token().isBlank()) return StateRequest.ERROR;
+        try{
+           if(!jwtService.validateToken(token.token())) return StateRequest.ERROR;
+           UserEntity userFound = userRepository.findByEmail(email).orElseThrow(()-> new IllegalArgumentException("User not found"));
+           if(userFound.getStatus() != Status.ACTIVE) return StateRequest.ERROR;
+           if(!userFound.getTokens().get(0).getToken().equals(token.token())) return StateRequest.ERROR;
+
+           return StateRequest.SUCCESS;
+
+
+        }catch (Exception e) {
+            return StateRequest.ERROR;
+        }
+    }
+
 }
