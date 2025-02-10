@@ -5,21 +5,18 @@ import com.microservice.user.presentation.dtos.LoginDTO;
 import com.microservice.user.presentation.dtos.TokenDTO;
 import com.microservice.user.presentation.dtos.UserDTO;
 
-import jakarta.validation.Valid;
+
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+
+
 
 
 @Service
 public interface AuthService {
 
-    public TokenDTO register(@RequestBody UserDTO user);
-
-    public TokenDTO login(@RequestBody LoginDTO loginDTO);
-
-    public boolean checkToken(@RequestBody @Valid TokenDTO token);
-
-    public StateRequest forgotPassword(@RequestParam String email);
+    public TokenDTO register( UserDTO user);
+    public TokenDTO login( LoginDTO loginDTO);
+    public boolean checkToken(  TokenDTO token);
+    public StateRequest forgotPassword(  String email);
 
 }

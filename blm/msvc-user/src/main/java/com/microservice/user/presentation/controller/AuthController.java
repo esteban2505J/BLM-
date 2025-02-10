@@ -67,6 +67,17 @@ public class AuthController {
 
     }
 
+    @PostMapping("/forgotPassword")
+    public ResponseEntity<ResponseDTO> forgotPassword(@Valid @RequestBody String email){
+        if (authServiceImpl.forgotPassword(email) != StateRequest.SUCCESS) {
+            return ResponseEntity.badRequest().body(new ResponseDTO<>(StateRequest.ERROR, "some went wrong"));
+        }
+        return ResponseEntity.ok().body(new ResponseDTO<>(StateRequest.SUCCESS, "email was send to your email"));
+
+    }
+
+
+
 
 
 }
