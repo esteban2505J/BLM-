@@ -19,6 +19,7 @@ public interface AuthService {
     public boolean checkToken(  TokenDTO token);
     public StateRequest forgotPassword(  String email);
     public StateRequest checkTokenPassword( TokenDTO token, String password);
+    public StateRequest resetPassword(String password, String email);
 
 
 

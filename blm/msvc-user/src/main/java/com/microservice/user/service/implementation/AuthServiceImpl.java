@@ -163,4 +163,15 @@ public class AuthServiceImpl implements AuthService {
         }
     }
 
+    @Override
+    public StateRequest resetPassword(String password, String email) {
+       if(password.isBlank() || email.isBlank()) throw new IllegalArgumentException("Password and email cannot be empty");
+       UserEntity userFound = userRepository.findByEmail(email).orElseThrow(()-> new IllegalArgumentException("User not found"));
+       if(userFound.getStatus() != Status.ACTIVE) throw  new IllegalStateException("User is not active");
+
+       userRepository.updatePassword(userFound.getId(),passwordEncoder.encode(password));
+
+       return StateRequest.SUCCESS;
+    }
+
 }
