@@ -3,6 +3,8 @@ package com.microservice.user.service.implementation;
 import com.microservice.user.persitence.model.entities.RoleEntity;
 import com.microservice.user.persitence.model.entities.UserEntity;
 
+import com.microservice.user.persitence.model.enums.StateRequest;
+import com.microservice.user.persitence.model.enums.Status;
 import com.microservice.user.persitence.model.vo.TokenEntity;
 import com.microservice.user.persitence.repository.UserRepository;
 import com.microservice.user.presentation.dtos.LoginDTO;
@@ -10,6 +12,7 @@ import com.microservice.user.presentation.dtos.TokenDTO;
 import com.microservice.user.presentation.dtos.UserDTO;
 import com.microservice.user.service.interfaces.AuthService;
 import com.microservice.user.utils.AppUtil;
+import com.microservice.user.utils.EmailUtil;
 import com.microservice.user.utils.SpringSecurityUtils;
 import io.jsonwebtoken.JwtException;
 import lombok.AllArgsConstructor;
@@ -33,6 +36,7 @@ public class AuthServiceImpl implements AuthService {
     private final AppUtil appUtil;
     private final RolesService rolesService;
     private final SpringSecurityUtils springSecurityUtils;
+    private final EmailUtil emailUtil;
 
 
 
@@ -124,5 +128,22 @@ public class AuthServiceImpl implements AuthService {
         }
     }
 
+    @Override
+    public StateRequest forgotPassword(String email) {
+        UserEntity userFound= userRepository.findByEmail(email).orElseThrow(()-> new IllegalArgumentException("User not found"));
+
+        if (userFound.getStatus() != Status.ACTIVE) return StateRequest.ERROR;
+        try {
+            TokenEntity resetToken =  jwtService.generateToken(userFound);
+            userFound.getTokens().clear();
+            userFound.getTokens().add(resetToken);
+            userRepository.updateTokens(userFound.getId(),List.of(resetToken));
+            emailUtil.sendEmail(email,"Forgot password", resetToken.getToken());
+            return StateRequest.SUCCESS;
+        }catch (Exception e) {
+            return StateRequest.ERROR;
+        }
+
+    }
 
 }
