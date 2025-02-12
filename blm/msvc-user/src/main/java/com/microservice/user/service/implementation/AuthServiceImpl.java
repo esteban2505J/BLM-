@@ -6,6 +6,7 @@ import com.microservice.user.persitence.model.entities.UserEntity;
 import com.microservice.user.persitence.model.enums.StateRequest;
 import com.microservice.user.persitence.model.enums.Status;
 import com.microservice.user.persitence.model.vo.TokenEntity;
+import com.microservice.user.persitence.repository.TokenRepository;
 import com.microservice.user.persitence.repository.UserRepository;
 import com.microservice.user.presentation.dtos.LoginDTO;
 import com.microservice.user.presentation.dtos.TokenDTO;
@@ -20,6 +21,7 @@ import lombok.AllArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +39,7 @@ public class AuthServiceImpl implements AuthService {
     private final RolesService rolesService;
     private final SpringSecurityUtils springSecurityUtils;
     private final EmailUtil emailUtil;
+    private final TokenRepository tokenRepository;
 
 
 
@@ -172,6 +175,24 @@ public class AuthServiceImpl implements AuthService {
        userRepository.updatePassword(userFound.getId(),passwordEncoder.encode(loginDTO.password()));
 
        return StateRequest.SUCCESS;
+    }
+
+    @Override
+    public StateRequest logout(String email) {
+        try {
+
+            if(email.isBlank()) throw new IllegalArgumentException("Email cannot be empty");
+            UserEntity userFound = userRepository.findByEmail(email).orElseThrow(()-> new IllegalArgumentException("User not found"));
+            if(userFound.getStatus() != Status.ACTIVE) throw  new IllegalStateException("User is not active");
+
+            tokenRepository.deleteAllTokensByUserId(userFound.getId());
+            return StateRequest.SUCCESS;
+
+
+        }catch (Exception e) {
+            return StateRequest.ERROR;
+        }
+
     }
 
 }

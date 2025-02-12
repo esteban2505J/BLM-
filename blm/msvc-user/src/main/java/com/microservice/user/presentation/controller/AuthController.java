@@ -87,7 +87,7 @@ public class AuthController {
 
     }
 
-    @PostMapping("resetPassword")
+    @PostMapping("/resetPassword")
     public ResponseEntity<ResponseDTO> changePassword(@Valid @RequestBody LoginDTO loginDTO) {
         try {
             StateRequest isPasswordChanged = authServiceImpl.resetPassword(loginDTO);
@@ -102,6 +102,16 @@ public class AuthController {
 
     }
 
+    @DeleteMapping("/logout")
+    public ResponseEntity<ResponseDTO> logout(@Valid @RequestParam String email) {
+        StateRequest isLogout = authServiceImpl.logout(email);
+        if(isLogout != StateRequest.SUCCESS) {
+            return ResponseEntity.badRequest().body(new ResponseDTO<>(isLogout, false));
+
+        }
+        return ResponseEntity.ok().body(new ResponseDTO<>(StateRequest.SUCCESS, true));
+
+    }
 
 
 

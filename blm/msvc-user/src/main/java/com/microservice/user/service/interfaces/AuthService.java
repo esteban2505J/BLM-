@@ -20,6 +20,7 @@ public interface AuthService {
     public StateRequest forgotPassword(  String email);
     public StateRequest checkTokenPassword( TokenDTO token, String password);
     public StateRequest resetPassword(LoginDTO loginDTO);
+    public StateRequest logout(String email);
 
 
 
