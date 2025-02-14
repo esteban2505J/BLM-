@@ -74,6 +74,11 @@ public class UserEntity {
     @Column(nullable = true, unique = true, length = 50)
     private String employeeCode;
 
+    private int failedLoginAttempts = 0;
+    private boolean accountLocked = false;
+
+    private LocalDateTime lockoutUntil;
+
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<TokenEntity> tokens = new ArrayList<>();
 

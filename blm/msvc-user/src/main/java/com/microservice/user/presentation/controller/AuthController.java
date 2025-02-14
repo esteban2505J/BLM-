@@ -8,12 +8,11 @@ import com.microservice.user.presentation.dtos.UserDTO;
 import com.microservice.user.service.implementation.AuthServiceImpl;
 import com.microservice.user.service.implementation.UserServiceImpl;
 import jakarta.validation.Valid;
-import org.apache.coyote.Response;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.plaf.nimbus.State;
 
 @RestController
 @PreAuthorize("permitAll()")
