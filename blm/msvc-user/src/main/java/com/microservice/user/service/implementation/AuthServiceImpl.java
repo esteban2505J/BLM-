@@ -105,11 +105,10 @@ public class AuthServiceImpl implements AuthService {
         UserEntity userFound = userRepository.findByEmail(loginDTO.email()).orElseThrow(()-> new IllegalArgumentException("User not found"));
 
         // Check if account is locked
-        if (Boolean.TRUE.equals(userFound.isAccountLocked()) &&
-                userFound.getLockoutUntil().isAfter(LocalDateTime.now())) {
+        if ( appUtil.isAccountLocked(userFound)) {
             throw new IllegalStateException("Account is temporarily locked. Try again later.");
         }
-        appUtil.isAccountLocked(userFound);
+
 
         if(!passwordEncoder.matches(loginDTO.password(), userFound.getPassword())) {
             appUtil.handleFailedLogin(userFound);
@@ -126,7 +125,6 @@ public class AuthServiceImpl implements AuthService {
         userFound.getTokens().add(accessToken);
         userFound.getTokens().add(refreshToken);
 
-        userFound.setFailedLoginAttempts(0);
 
         userRepository.updateTokens(userFound.getId(),List.of(accessToken,refreshToken));
 
