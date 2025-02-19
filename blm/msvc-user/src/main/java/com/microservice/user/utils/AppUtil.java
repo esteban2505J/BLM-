@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-//@AllArgsConstructor()
+
 @Service
 public class AppUtil {
 
@@ -56,7 +56,7 @@ public class AppUtil {
         userRepository.save(user);
     }
 
- public boolean isAccountLocked(UserEntity user) {
+    public boolean isAccountLocked(UserEntity user) {
 
         if (!user.isAccountLocked()) {
             return false;

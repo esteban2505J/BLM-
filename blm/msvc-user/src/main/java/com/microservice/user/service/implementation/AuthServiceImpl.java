@@ -21,11 +21,8 @@ import lombok.AllArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -179,7 +176,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public StateRequest resetPassword(LoginDTO loginDTO) {
        if(loginDTO.password().isBlank() || loginDTO.email().isBlank()) throw new IllegalArgumentException("Password and email cannot be empty");
-       UserEntity userFound = userRepository.findByEmail(loginDTO.email()).orElseThrow(()-> new IllegalArgumentException("User not found"));
+       UserEntity       userFound = userRepository.findByEmail(loginDTO.email()).orElseThrow(()-> new IllegalArgumentException("User not found"));
        if(userFound.getStatus() != Status.ACTIVE) throw  new IllegalStateException("User is not active");
 
        userRepository.updatePassword(userFound.getId(),passwordEncoder.encode(loginDTO.password()));
