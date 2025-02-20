@@ -1,6 +1,8 @@
 package com.microservice.user.service.implementation;
+import com.microservice.user.persitence.model.entities.RoleEntity;
 import com.microservice.user.persitence.model.entities.UserEntity;
 import com.microservice.user.persitence.model.enums.StateRequest;
+import com.microservice.user.persitence.repository.RoleRepository;
 import com.microservice.user.persitence.repository.UserRepository;
 import com.microservice.user.presentation.dtos.ResponseDTO;
 import com.microservice.user.presentation.dtos.UserDTO;
@@ -8,7 +10,7 @@ import com.microservice.user.service.interfaces.UserService;
 import com.microservice.user.utils.AppUtil;
 import org.springframework.stereotype.Service;
 
-import javax.swing.plaf.nimbus.State;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -17,6 +19,7 @@ public class UserServiceImpl implements UserService {
 
     private final AppUtil appUtil;
     UserRepository userRepository;
+    RoleRepository roleRepository;
 
     public UserServiceImpl(AppUtil appUtil) {
         this.appUtil = appUtil;
@@ -84,7 +87,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDTO> getUserByRol(String email) {
+    public StateRequest addRoleToUser(String email, String nameRole) {
+
+        try {
+            UserEntity userFound = userRepository.findByEmail(email).orElseThrow( ()-> new IllegalArgumentException("El usuario no existe"));
+            RoleEntity role = roleRepository.findByName(nameRole).orElseThrow( ()-> new IllegalArgumentException("El Rol no existe"));
+
+            userFound.getRoles().add(role);
+            userRepository.save(userFound);
+
+            return StateRequest.SUCCESS;
+        }catch (IllegalArgumentException e) {
+            return StateRequest.ERROR;
+        }
+
+
+    }
+
+    @Override
+    public List<UserDTO> getUserByRol(String email, String rolName) {
         return List.of();
     }
 

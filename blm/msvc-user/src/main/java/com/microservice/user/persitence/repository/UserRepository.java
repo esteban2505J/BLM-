@@ -27,4 +27,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     @Transactional
     @Query("UPDATE UserEntity u SET u.password = :password WHERE u.id = :userId")
     void updatePassword(@Param("userId") Long userId, @Param("password") String password);
+
+    List<UserEntity> getAllUsers();
 }
