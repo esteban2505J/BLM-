@@ -62,6 +62,7 @@ public class AuthServiceImpl implements AuthService {
            UserEntity newUser =  UserEntity.builder()
                     .email(user.email())
                     .password(passwordEncoder.encode(user.password()))
+                   .status(Status.ACTIVE)
                     .credentialsNonExpired(true)
                     .isEnabled(true)
                     .firstName(user.firstName())

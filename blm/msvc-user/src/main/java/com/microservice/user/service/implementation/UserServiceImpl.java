@@ -2,6 +2,7 @@ package com.microservice.user.service.implementation;
 import com.microservice.user.persitence.model.entities.RoleEntity;
 import com.microservice.user.persitence.model.entities.UserEntity;
 import com.microservice.user.persitence.model.enums.StateRequest;
+import com.microservice.user.persitence.model.enums.Status;
 import com.microservice.user.persitence.repository.RoleRepository;
 import com.microservice.user.persitence.repository.UserRepository;
 import com.microservice.user.presentation.dtos.ResponseDTO;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.time.LocalDateTime;
+
 import java.util.List;
 
 @Service
@@ -72,6 +74,7 @@ public class UserServiceImpl implements UserService {
             UserEntity userFound = userRepository.findByEmail(email).orElseThrow( ()-> new IllegalArgumentException("El usuario no existe"));
 
             userFound.setEnabled(false);
+            userFound.setStatus(Status.INACTIVE);
             userFound.setUpdatedAt(LocalDateTime.now());
             userRepository.save(userFound);
 
@@ -79,11 +82,6 @@ public class UserServiceImpl implements UserService {
 
         }
         return StateRequest.ERROR;
-    }
-
-    @Override
-    public UserDTO addRoleToUser(String email) {
-        return null;
     }
 
     @Override
@@ -105,17 +103,39 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDTO> getUserByRol(String email, String rolName) {
-        return List.of();
+    public List<UserEntity> getAllUsers(Status status) {
+
+        try {
+            return  userRepository.findByUserStatus(status);
+
+        }catch (Exception e) {
+            throw new RuntimeException("Error al obtener los usuarios");
+        }
+
     }
 
     @Override
-    public List<UserDTO> getAllUsers() {
-        return List.of();
+    public List<UserEntity> getUserByRol(String rolName) {
+        try {
+
+            return userRepository.findActiveUsersByRole(rolName);
+
+        }catch (Exception e) {
+            throw new RuntimeException("Error al obtener los usuarios");
+        }
     }
 
     @Override
     public StateRequest activateUser(String email) {
-        return null;
+        try {
+            UserEntity userFound = userRepository.findByEmail(email).orElseThrow( ()-> new IllegalArgumentException("El usuario no existe"));
+            userFound.setEnabled(true);
+            userFound.setStatus(Status.ACTIVE);
+            userRepository.save(userFound);
+
+            return StateRequest.SUCCESS;
+        }catch (Exception e) {
+            return StateRequest.ERROR;
+        }
     }
 }

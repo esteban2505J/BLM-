@@ -2,6 +2,7 @@ package com.microservice.user.utils;
 
 import com.microservice.user.persitence.model.entities.UserEntity;
 import com.microservice.user.persitence.repository.UserRepository;
+import com.microservice.user.presentation.dtos.UserDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -76,6 +77,11 @@ public class AppUtil {
 
         return true;
     }
+
+//    // Método para convertir la entidad a DTO
+//    private UserDTO convertToDTO(UserEntity user) {
+//        return new UserDTO(Role., user.getLastName(), user.getLastName(), user.getEmail(),null, user.getPhoneNumber());
+//    }
 
 
 
