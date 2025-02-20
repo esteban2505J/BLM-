@@ -1,13 +1,25 @@
 package com.microservice.user.service.interfaces;
 
 
+import com.microservice.user.persitence.model.enums.StateRequest;
 import com.microservice.user.presentation.dtos.ResponseDTO;
-import com.microservice.user.presentation.dtos.TokenDTO;
 import com.microservice.user.presentation.dtos.UserDTO;
-import org.springframework.http.ResponseEntity;
+
+import java.util.List;
+
 
 public interface UserService {
 
-    public ResponseEntity<TokenDTO> createUser(UserDTO userDTO);
-    public ResponseEntity<ResponseDTO> updateUser(UserDTO userDTO);
+
+    public ResponseDTO<String> updateUser(UserDTO userDTO);
+    public StateRequest deleteUser(String  email);
+    public UserDTO addRoleToUser(String  email);
+    public List<UserDTO> getUserByRol(String  email);
+    public List<UserDTO> getAllUsers();
+    public StateRequest activateUser(String  email);
+    public s
+
+
+
+    
 }
