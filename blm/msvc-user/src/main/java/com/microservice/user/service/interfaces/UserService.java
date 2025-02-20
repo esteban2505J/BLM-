@@ -17,7 +17,7 @@ public interface UserService {
     public List<UserDTO> getUserByRol(String  email);
     public List<UserDTO> getAllUsers();
     public StateRequest activateUser(String  email);
-    public s
+
 
 
 
