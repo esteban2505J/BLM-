@@ -103,6 +103,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public StateRequest removeRoleFromUser(String email, String nameRole) {
+       try {
+
+           UserEntity userFound = userRepository.findByEmail(email).orElseThrow( ()-> new IllegalArgumentException("El usuario no existe"));
+           if (!userFound.isEnabled() && userFound.getStatus() != Status.ACTIVE) throw new IllegalArgumentException("El usuario no está activo");
+           userFound.getRoles().removeIf(role -> role.getName().equals(nameRole));
+
+           userRepository.save(userFound);
+           return StateRequest.SUCCESS;
+
+       }catch (Exception e){
+           return StateRequest.ERROR;
+       }
+
+    }
+
+    @Override
     public List<UserEntity> getAllUsers(Status status) {
 
         try {
