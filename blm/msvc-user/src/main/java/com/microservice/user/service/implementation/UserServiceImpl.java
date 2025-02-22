@@ -121,9 +121,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserEntity> getAllUsers(Status status) {
+        Status effectiveStatus = (status != null) ? status : Status.ACTIVE;
 
         try {
-            return  userRepository.findByUserStatus(status);
+            return  userRepository.findByUserStatus(effectiveStatus);
 
         }catch (Exception e) {
             throw new RuntimeException("Error al obtener los usuarios");
