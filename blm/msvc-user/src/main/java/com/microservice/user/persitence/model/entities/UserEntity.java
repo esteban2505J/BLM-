@@ -47,6 +47,7 @@ public class UserEntity {
     @Column(nullable = false, unique = false , length = 50)
     private String phoneNumber;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false, unique = false, length = 50)
     private Status status;
 

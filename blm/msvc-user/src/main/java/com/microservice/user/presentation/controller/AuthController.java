@@ -6,7 +6,6 @@ import com.microservice.user.presentation.dtos.ResponseDTO;
 import com.microservice.user.presentation.dtos.TokenDTO;
 import com.microservice.user.presentation.dtos.UserDTO;
 import com.microservice.user.service.implementation.AuthServiceImpl;
-import com.microservice.user.service.implementation.UserServiceImpl;
 import jakarta.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
@@ -20,11 +19,10 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final AuthServiceImpl authServiceImpl;
-    private final UserServiceImpl userServiceImpl;
 
-    public AuthController(AuthServiceImpl authServiceImpl, UserServiceImpl userServiceImpl) {
+    public AuthController(AuthServiceImpl authServiceImpl) {
         this.authServiceImpl = authServiceImpl;
-        this.userServiceImpl = userServiceImpl;
+
     }
 
 

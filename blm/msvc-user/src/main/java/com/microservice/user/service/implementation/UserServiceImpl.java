@@ -17,14 +17,18 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+
 public class UserServiceImpl implements UserService {
 
     private final AppUtil appUtil;
     UserRepository userRepository;
     RoleRepository roleRepository;
 
-    public UserServiceImpl(AppUtil appUtil) {
+    public UserServiceImpl(AppUtil appUtil, UserRepository userRepository, RoleRepository roleRepository) {
         this.appUtil = appUtil;
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+
     }
 
 
