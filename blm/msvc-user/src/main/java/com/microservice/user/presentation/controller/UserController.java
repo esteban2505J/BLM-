@@ -10,7 +10,6 @@ import com.microservice.user.service.implementation.UserServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +22,7 @@ public class UserController {
     UserServiceImpl userService;
 
 
+    @PreAuthorize("hasAuthority('UPDATE')")
     @PutMapping("/updateUser")
     public ResponseEntity<ResponseDTO<StateRequest>> updateUserController(@Valid @RequestBody UserDTO userDTO) {
         ResponseDTO<StateRequest> responseDTO = userService.updateUser(userDTO);
@@ -33,6 +33,7 @@ public class UserController {
 
     }
 
+    @PreAuthorize("hasAnyAuthority('DELETE', 'UPDATE')")
     @PatchMapping("/deleteUser")
     public ResponseEntity <ResponseDTO<String>> deleteUserController(@RequestParam String email){
         if (userService.deleteUser(email) == StateRequest.SUCCESS) return ResponseEntity.ok().body(new ResponseDTO<String>(StateRequest.SUCCESS, "The user have been deleted"));

@@ -29,4 +29,7 @@ public class RoleEntity {
     @ManyToMany(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
     @JoinTable(name = "role_permissions", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "permission_id"))
     private Set<PermissionEntity> permissions =  new HashSet<>();
+
+    @Column(nullable = false, name = "hierarchy_level")
+    private int hierarchyLevel;
 }
