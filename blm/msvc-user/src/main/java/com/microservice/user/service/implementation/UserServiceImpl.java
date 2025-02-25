@@ -9,6 +9,8 @@ import com.microservice.user.presentation.dtos.ResponseDTO;
 import com.microservice.user.presentation.dtos.UserDTO;
 import com.microservice.user.service.interfaces.UserService;
 import com.microservice.user.utils.AppUtil;
+import com.microservice.user.utils.SpringSecurityUtils;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.stereotype.Service;
 
 
@@ -23,6 +25,7 @@ public class UserServiceImpl implements UserService {
     private final AppUtil appUtil;
     UserRepository userRepository;
     RoleRepository roleRepository;
+    SpringSecurityUtils springSecurityUtils;
 
     public UserServiceImpl(AppUtil appUtil, UserRepository userRepository, RoleRepository roleRepository) {
         this.appUtil = appUtil;
@@ -73,9 +76,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public StateRequest deleteUser(String email) {
 
+
         if (!email.isBlank()){
 
             UserEntity userFound = userRepository.findByEmail(email).orElseThrow( ()-> new IllegalArgumentException("El usuario no existe"));
+
+            if(!springSecurityUtils.canDeleteThisUser(userFound.getRoles().stream().toList())) throw new IllegalArgumentException("the user doesn't have the authority to do this action");
 
             userFound.setEnabled(false);
             userFound.setStatus(Status.INACTIVE);

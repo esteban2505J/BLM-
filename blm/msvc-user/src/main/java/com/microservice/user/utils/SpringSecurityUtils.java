@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Set;
 import org.springframework.security.core.GrantedAuthority;
 import java.util.stream.Collectors;
@@ -31,21 +33,27 @@ public class SpringSecurityUtils {
 
     }
 
-    public boolean canDeleteThisUser(String roleName){
-        if(roleName.isBlank()) throw new IllegalArgumentException("Role name cannot be blank");
+    public boolean canDeleteThisUser(List<RoleEntity> rolesUserBeDeleted){
+//        if(roleName.isBlank()) throw new IllegalArgumentException("Role name cannot be blank");
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         Set<String> currentUserRoles = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toSet());
 
-        int maxUserRoleLevel = currentUserRoles.stream().map(role -> roleRepository.findByName(role).orElseThrow(()-> new IllegalArgumentException("Role doesn't exist")).getHierarchyLevel())
-                .collect(Collectors.toSet()).stream().max(Integer::compare).orElse(0);
+        int maxUserRoleLevel = currentUserRoles
+                .stream()
+                .map(role -> roleRepository.findByName(role).orElseThrow(()-> new IllegalArgumentException("Role doesn't exist")).getHierarchyLevel())
+               .max(Integer::compare).orElse(0);
+
 
         // Get the hierarchy level of the target role to be deleted
-        int targetRoleLevel = roleRepository.findByName(roleName)
-                .orElseThrow(() -> new IllegalArgumentException("Target role doesn't exist"))
-                .getHierarchyLevel();
+        int targetRoleLevel = rolesUserBeDeleted
+                .stream()
+                .map(RoleEntity::getHierarchyLevel)
+                .max(Integer::compare).get();
+
 
         // Compare levels: the user must have an equal or higher role level
         return maxUserRoleLevel >= targetRoleLevel;
