@@ -11,10 +11,7 @@ import com.microservice.user.service.interfaces.UserService;
 import com.microservice.user.utils.AppUtil;
 import com.microservice.user.utils.SpringSecurityUtils;
 import org.springframework.stereotype.Service;
-
-
 import java.time.LocalDateTime;
-
 import java.util.List;
 
 @Service

@@ -34,7 +34,7 @@ public class SpringSecurityUtils {
     }
 
     public boolean canManageThisUser(List<RoleEntity> rolesUserBeDeleted){
-//        if(roleName.isBlank()) throw new IllegalArgumentException("Role name cannot be blank");
+
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -46,6 +46,7 @@ public class SpringSecurityUtils {
                 .stream()
                 .map(role -> roleRepository.findByName(role).orElseThrow(()-> new IllegalArgumentException("Role doesn't exist")).getHierarchyLevel())
                .max(Integer::compare).orElse(0);
+
 
 
         // Get the hierarchy level of the target role to be deleted

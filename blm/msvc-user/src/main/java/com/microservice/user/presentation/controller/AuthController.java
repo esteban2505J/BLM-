@@ -99,6 +99,7 @@ public class AuthController {
 
     }
 
+    @PreAuthorize("isAuthenticated()")
     @DeleteMapping("/logout")
     public ResponseEntity<ResponseDTO> logout(@Valid @RequestParam String email) {
         StateRequest isLogout = authServiceImpl.logout(email);
