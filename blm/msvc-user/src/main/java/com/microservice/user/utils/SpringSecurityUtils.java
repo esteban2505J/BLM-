@@ -33,7 +33,7 @@ public class SpringSecurityUtils {
 
     }
 
-    public boolean canDeleteThisUser(List<RoleEntity> rolesUserBeDeleted){
+    public boolean canManageThisUser(List<RoleEntity> rolesUserBeDeleted){
 //        if(roleName.isBlank()) throw new IllegalArgumentException("Role name cannot be blank");
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

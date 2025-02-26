@@ -10,7 +10,6 @@ import com.microservice.user.presentation.dtos.UserDTO;
 import com.microservice.user.service.interfaces.UserService;
 import com.microservice.user.utils.AppUtil;
 import com.microservice.user.utils.SpringSecurityUtils;
-import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.stereotype.Service;
 
 
@@ -77,11 +76,13 @@ public class UserServiceImpl implements UserService {
     public StateRequest deleteUser(String email) {
 
 
+
+
         if (!email.isBlank()){
 
             UserEntity userFound = userRepository.findByEmail(email).orElseThrow( ()-> new IllegalArgumentException("El usuario no existe"));
 
-            if(!springSecurityUtils.canDeleteThisUser(userFound.getRoles().stream().toList())) throw new IllegalArgumentException("the user doesn't have the authority to do this action");
+            if(!springSecurityUtils.canManageThisUser(userFound.getRoles().stream().toList())) throw new IllegalArgumentException("the user doesn't have the authority to do this action");
 
             userFound.setEnabled(false);
             userFound.setStatus(Status.INACTIVE);
@@ -99,6 +100,9 @@ public class UserServiceImpl implements UserService {
 
         try {
             UserEntity userFound = userRepository.findByEmail(email).orElseThrow( ()-> new IllegalArgumentException("El usuario no existe"));
+
+            if(springSecurityUtils.canManageThisUser(userFound.getRoles().stream().toList())) throw new IllegalArgumentException("the user doesn't have the authority to do this action");
+
             RoleEntity role = roleRepository.findByName(nameRole).orElseThrow( ()-> new IllegalArgumentException("El Rol no existe"));
 
             userFound.getRoles().add(role);
@@ -118,6 +122,7 @@ public class UserServiceImpl implements UserService {
 
            UserEntity userFound = userRepository.findByEmail(email).orElseThrow( ()-> new IllegalArgumentException("El usuario no existe"));
            if (!userFound.isEnabled() && userFound.getStatus() != Status.ACTIVE) throw new IllegalArgumentException("El usuario no está activo");
+           if(springSecurityUtils.canManageThisUser(userFound.getRoles().stream().toList())) throw new IllegalArgumentException("the user doesn't have the authority to do this action");
            userFound.getRoles().removeIf(role -> role.getName().equals(nameRole));
 
            userRepository.save(userFound);
@@ -166,4 +171,5 @@ public class UserServiceImpl implements UserService {
             return StateRequest.ERROR;
         }
     }
+
 }

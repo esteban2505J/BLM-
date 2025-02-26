@@ -43,6 +43,7 @@ public class UserController {
 
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','SUPERADMIN')")
     @PatchMapping("/addRoleToUser")
     public ResponseEntity <ResponseDTO<String>> addRoleToUserController(@RequestParam String email, @RequestParam(required = true) String role){
         if (userService.addRoleToUser(email, role) == StateRequest.SUCCESS) return ResponseEntity.ok().body(new ResponseDTO<String>(StateRequest.SUCCESS, "The role has been added to the user "));
@@ -50,6 +51,7 @@ public class UserController {
         return ResponseEntity.status(400).body(new ResponseDTO<String>(StateRequest.ERROR, "The role could not be added to the user "));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','SUPERADMIN')")
     @PatchMapping("/removeRoleFromUser")
     public ResponseEntity<ResponseDTO<String>> removeRoleFromUserController(@RequestParam String email, @RequestParam String role){
         if (userService.removeRoleFromUser(email, role) == StateRequest.SUCCESS) return ResponseEntity.ok().body(new ResponseDTO<String>(StateRequest.SUCCESS, "The role has been removed from the user "));
@@ -57,6 +59,7 @@ public class UserController {
         return ResponseEntity.status(400).body(new ResponseDTO<String>(StateRequest.ERROR, "The role could not be removed from the user "));
     }
 
+    @PreAuthorize("permitAll()")
     @GetMapping("/getAllUsers")
     public ResponseEntity<ResponseDTO<List<UserEntity>>> getAllUsersController(@RequestParam Status status){
 
@@ -64,11 +67,13 @@ public class UserController {
 
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','SUPERADMIN')")
     @GetMapping("/getUsersByRol")
     public ResponseEntity<ResponseDTO<List<UserEntity>>> getUsersByRolController(@RequestParam String rol){
         return ResponseEntity.ok().body(new ResponseDTO<List<UserEntity>>(StateRequest.SUCCESS, userService.getUserByRol(rol)));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','SUPERADMIN')")
     @PatchMapping("/activateUser")
     public ResponseEntity<ResponseDTO<String>> activateUserController(@RequestParam String email){
         StateRequest ActivatedUser = userService.activateUser(email);
