@@ -1,7 +1,7 @@
 package com.microservice.user.service.implementation;
 
-import com.microservice.user.persitence.model.entities.UserEntity;
-import com.microservice.user.persitence.model.vo.TokenEntity;
+import com.microservice.user.persistence.model.entities.UserEntity;
+import com.microservice.user.persistence.model.vo.TokenEntity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;

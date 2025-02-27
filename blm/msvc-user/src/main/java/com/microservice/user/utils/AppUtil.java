@@ -1,8 +1,7 @@
 package com.microservice.user.utils;
 
-import com.microservice.user.persitence.model.entities.UserEntity;
-import com.microservice.user.persitence.repository.UserRepository;
-import com.microservice.user.presentation.dtos.UserDTO;
+import com.microservice.user.persistence.model.entities.UserEntity;
+import com.microservice.user.persistence.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,7 @@
 package com.microservice.user.service.implementation;
 
-import com.microservice.user.persitence.model.entities.UserEntity;
-import com.microservice.user.persitence.repository.UserRepository;
+import com.microservice.user.persistence.model.entities.UserEntity;
+import com.microservice.user.persistence.repository.UserRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

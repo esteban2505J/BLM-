@@ -1,6 +1,6 @@
 package com.microservice.user.presentation.dtos;
 
-import com.microservice.user.persitence.model.enums.StateRequest;
+import com.microservice.user.persistence.model.enums.StateRequest;
 
 public record ResponseDTO<T>(
 

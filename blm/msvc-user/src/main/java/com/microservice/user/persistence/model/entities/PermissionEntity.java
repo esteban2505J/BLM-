@@ -1,4 +1,4 @@
-package com.microservice.user.persitence.model.entities;
+package com.microservice.user.persistence.model.entities;
 
 
 import jakarta.persistence.*;

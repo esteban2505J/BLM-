@@ -1,10 +1,10 @@
 package com.microservice.user.service.implementation;
 
-import com.microservice.user.persitence.model.entities.PermissionEntity;
-import com.microservice.user.persitence.model.entities.RoleEntity;
-import com.microservice.user.persitence.model.enums.Role;
-import com.microservice.user.persitence.repository.PermissionRepository;
-import com.microservice.user.persitence.repository.RoleRepository;
+import com.microservice.user.persistence.model.entities.PermissionEntity;
+import com.microservice.user.persistence.model.entities.RoleEntity;
+import com.microservice.user.persistence.model.enums.Role;
+import com.microservice.user.persistence.repository.PermissionRepository;
+import com.microservice.user.persistence.repository.RoleRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.*;

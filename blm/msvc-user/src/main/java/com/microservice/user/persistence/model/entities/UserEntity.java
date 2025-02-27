@@ -1,9 +1,9 @@
-package com.microservice.user.persitence.model.entities;
+package com.microservice.user.persistence.model.entities;
 
 
-import com.microservice.user.persitence.model.enums.Status;
+import com.microservice.user.persistence.model.enums.Status;
 
-import com.microservice.user.persitence.model.vo.TokenEntity;
+import com.microservice.user.persistence.model.vo.TokenEntity;
 import jakarta.persistence.*;
 import lombok.*;
 

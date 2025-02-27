@@ -1,10 +1,10 @@
 package com.microservice.user.service.implementation;
-import com.microservice.user.persitence.model.entities.RoleEntity;
-import com.microservice.user.persitence.model.entities.UserEntity;
-import com.microservice.user.persitence.model.enums.StateRequest;
-import com.microservice.user.persitence.model.enums.Status;
-import com.microservice.user.persitence.repository.RoleRepository;
-import com.microservice.user.persitence.repository.UserRepository;
+import com.microservice.user.persistence.model.entities.RoleEntity;
+import com.microservice.user.persistence.model.entities.UserEntity;
+import com.microservice.user.persistence.model.enums.StateRequest;
+import com.microservice.user.persistence.model.enums.Status;
+import com.microservice.user.persistence.repository.RoleRepository;
+import com.microservice.user.persistence.repository.UserRepository;
 import com.microservice.user.presentation.dtos.ResponseDTO;
 import com.microservice.user.presentation.dtos.UserDTO;
 import com.microservice.user.service.interfaces.UserService;

@@ -1,6 +1,6 @@
 package com.microservice.user.presentation.controller;
 
-import com.microservice.user.persitence.model.enums.StateRequest;
+import com.microservice.user.persistence.model.enums.StateRequest;
 import com.microservice.user.presentation.dtos.LoginDTO;
 import com.microservice.user.presentation.dtos.ResponseDTO;
 import com.microservice.user.presentation.dtos.TokenDTO;

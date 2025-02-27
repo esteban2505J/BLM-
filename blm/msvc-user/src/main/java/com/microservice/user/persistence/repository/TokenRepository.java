@@ -1,6 +1,6 @@
-package com.microservice.user.persitence.repository;
+package com.microservice.user.persistence.repository;
 
-import com.microservice.user.persitence.model.vo.TokenEntity;
+import com.microservice.user.persistence.model.vo.TokenEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

@@ -1,6 +1,6 @@
-package com.microservice.user.persitence.model.entities;
+package com.microservice.user.persistence.model.entities;
 
-import com.microservice.user.persitence.model.enums.Role;
+import com.microservice.user.persistence.model.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 

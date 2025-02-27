@@ -1,6 +1,6 @@
-package com.microservice.user.persitence.model.vo;
+package com.microservice.user.persistence.model.vo;
 
-import com.microservice.user.persitence.model.entities.UserEntity;
+import com.microservice.user.persistence.model.entities.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 

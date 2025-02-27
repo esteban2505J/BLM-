@@ -1,9 +1,8 @@
-package com.microservice.user.persitence.repository;
+package com.microservice.user.persistence.repository;
 
-import com.microservice.user.persitence.model.entities.PermissionEntity;
+import com.microservice.user.persistence.model.entities.PermissionEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 

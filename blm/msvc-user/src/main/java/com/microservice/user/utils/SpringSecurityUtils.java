@@ -1,7 +1,7 @@
 package com.microservice.user.utils;
-import com.microservice.user.persitence.model.entities.RoleEntity;
-import com.microservice.user.persitence.model.enums.Role;
-import com.microservice.user.persitence.repository.RoleRepository;
+import com.microservice.user.persistence.model.entities.RoleEntity;
+import com.microservice.user.persistence.model.enums.Role;
+import com.microservice.user.persistence.repository.RoleRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
