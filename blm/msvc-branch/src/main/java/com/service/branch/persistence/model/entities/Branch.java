@@ -42,8 +42,7 @@ public class Branch {
     @Column(length = 20)
     private String phoneNumber;
 
-    @Column(length = 100)
-    private String email;
+
 
     @Column(nullable = false)
     private Double budget;
@@ -59,6 +58,8 @@ public class Branch {
 
     @Column
     private LocalDateTime updatedAt;
+
+
 
     @Column
     private Boolean isActive = true;

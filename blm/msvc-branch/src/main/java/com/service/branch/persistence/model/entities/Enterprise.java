@@ -26,6 +26,9 @@ public class Enterprise {
     @Column(length = 255)
     private String address;
 
+    @Column(length = 100)
+    private String email;
+
     @OneToMany(mappedBy = "enterprise", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Branch> branches;
 
