@@ -7,8 +7,6 @@ import lombok.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Getter
-@Setter
 @Builder
 @Entity
 @Data
@@ -29,8 +27,14 @@ public class Enterprise {
     @Column(length = 100)
     private String email;
 
+    @Column(length = 255)
+    private String website;
+
+    @Column(length = 500)
+    private String logoUrl;
+
     @OneToMany(mappedBy = "enterprise", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private Set<Branch> branches;
+    private Set<Branch> branches = new HashSet<>();
 
     @ElementCollection
     @CollectionTable(name = "enterprise_employees", joinColumns = @JoinColumn(name = "enterprise_id"))

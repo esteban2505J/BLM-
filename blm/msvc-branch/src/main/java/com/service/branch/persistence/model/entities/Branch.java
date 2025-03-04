@@ -1,5 +1,7 @@
 package com.service.branch.persistence.model.entities;
 
+import ch.qos.logback.core.status.StatusBase;
+import com.service.branch.persistence.model.enums.StatusBranch;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -50,6 +52,10 @@ public class Branch {
 
     @Column(nullable = false)
     private Long managerId;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private StatusBranch status = StatusBranch.ACTIVE;
 
     @Column(updatable = false)
     private LocalDateTime createdAt;
