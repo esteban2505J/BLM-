@@ -8,9 +8,7 @@ import com.microservice.user.persistence.model.enums.Status;
 import com.microservice.user.persistence.model.vo.TokenEntity;
 import com.microservice.user.persistence.repository.TokenRepository;
 import com.microservice.user.persistence.repository.UserRepository;
-import com.microservice.user.presentation.dtos.LoginDTO;
-import com.microservice.user.presentation.dtos.TokenDTO;
-import com.microservice.user.presentation.dtos.UserDTO;
+import com.microservice.user.presentation.dtos.*;
 import com.microservice.user.service.interfaces.AuthService;
 import com.microservice.user.utils.AppUtil;
 import com.microservice.user.utils.EmailUtil;
@@ -201,6 +199,52 @@ public class AuthServiceImpl implements AuthService {
             return StateRequest.ERROR;
         }
 
+    }
+
+    @Override
+    public ResponseDTO<TokenDTO> creteAnEmployee(EmployeeDTO employee) {
+
+       try {
+
+           if (employee == null) throw new IllegalArgumentException("Employee cannot be null");
+           if (employee.employeeCode().isBlank() || employee.status() != Status.ACTIVE)throw new IllegalArgumentException("Employee code cannot be empty");
+           //verify if the user already exist in the database
+           if(appUtil.checkEmail(employee.email()))  throw new IllegalArgumentException("Email is already in use");
+
+//            check if the user you are trying to create another user has the required authorization
+           if(!springSecurityUtils.canManageThisUser(employee.roles().stream().toList())) throw new InsufficientAuthenticationException("You do not have the required role");
+
+          UserEntity newUser =  UserEntity.builder()
+                   .email(employee.email())
+                   .firstName(employee.firstName())
+                   .lastName(employee.lastName())
+                   .userName(employee.userName())
+                   .employeeCode(employee.employeeCode())
+                   .branchIds(employee.branchIds())
+                   .status(Status.ACTIVE)
+                   .roles(employee.roles()).build();
+
+
+           // **Generar Tokens**
+           TokenEntity accessToken = jwtService.generateToken(newUser);
+           TokenEntity refreshToken = jwtService.generateRefreshToken(newUser);
+
+           // **Crear entidades de tokens y asociarlas al usuario**
+           List<TokenEntity> tokens = List.of(
+                   accessToken,refreshToken
+           );
+
+           newUser.getTokens().addAll(tokens);
+
+           //save a new user
+           userRepository.save(newUser);
+
+           //generate and return user token
+           return new ResponseDTO(StateRequest.SUCCESS, new TokenDTO(accessToken.getToken()));
+
+       }catch (Exception e) {
+           throw  new IllegalStateException("An error occurred while creating an employee");
+       }
     }
 
 }

@@ -1,9 +1,7 @@
 package com.microservice.user.service.interfaces;
 
 import com.microservice.user.persistence.model.enums.StateRequest;
-import com.microservice.user.presentation.dtos.LoginDTO;
-import com.microservice.user.presentation.dtos.TokenDTO;
-import com.microservice.user.presentation.dtos.UserDTO;
+import com.microservice.user.presentation.dtos.*;
 
 
 import org.springframework.stereotype.Service;
@@ -21,6 +19,7 @@ public interface AuthService {
     public StateRequest checkTokenPassword( TokenDTO token, String password);
     public StateRequest resetPassword(LoginDTO loginDTO);
     public StateRequest logout(String email);
+    public ResponseDTO<TokenDTO> creteAnEmployee(EmployeeDTO employee);
 
 
 
